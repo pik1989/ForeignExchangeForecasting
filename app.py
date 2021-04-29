@@ -1,4 +1,4 @@
-
+   
 from flask import Flask,render_template,redirect,request
 from flask.helpers import flash
 import pandas as pd
@@ -58,7 +58,7 @@ change_15=float(data_day15['Units per HKD'])-float(data_day1['Units per HKD'])
 change_365=float(data_day365['Units per HKD'])-float(data_day1['Units per HKD'])
 
 price_day1=float(data_day1['Units per HKD'])
-print(price_day1,change_1,change_7,change_15,change_365)
+#print(price_day1,change_1,change_7,change_15,change_365)
 
 
 
@@ -139,10 +139,18 @@ def submit_data():
         py.plot([actual_chart, predict_chart, predict_chart_upper, predict_chart_lower],filename = filename, auto_open=False)
         with open(filename, "r") as f:
             graph_html = f.read()
-
+    if s1=="D":
+        value="Days"
+    elif s1=="M":
+        value="Month"
+    else:
+        value="Year"
+    final_df_1=final_df[['ds','yhat']].tail(s2)
+    final_df_1 = final_df_1.rename(columns={'yhat': 'Units Per HKD', 'ds':value})
+    final_df_1.reset_index(drop=True, inplace=True)
     IS_FORECAST = True
     
-    return render_template("step1.html",price_day1=price_day1,change_1=change_1,change_7=change_7,change_15=change_15,change_365=change_365, graph_html=graph_html, parameter=s2, IS_FORECAST = IS_FORECAST)
+    return render_template("step1.html",price_day1=price_day1,change_1=change_1,change_7=change_7,change_15=change_15,change_365=change_365, graph_html=graph_html, parameter=s2,tables=[final_df_1.to_html(classes='forecast')], IS_FORECAST = IS_FORECAST)
 
 
    
@@ -150,5 +158,4 @@ def submit_data():
     
 if __name__ =="__main__":
 
-    socketio.run(app, debug=True)
-    
+    socketio.run(app, port=8000)
