@@ -212,12 +212,19 @@
 
 			<div class="col-lg-9 col-sm-12 col-md-12">
 				<div class="graph-wrap">
-					<h2 class="text-center fw-bolder text-secondary">Forecast Graph</h2>
+					<h2 class="text-center fw-bolder text-secondary display-5">
+						{% if IS_FORECAST %}
+						Forecasted Data
+						{% else %}
+						Actual Data
+						{% endif %}
+					</h2>
 					<br>
 					<br>
 					<div class="embed-responsive embed-responsive-4by3">
 						<iframe class="embed-responsive-item" srcdoc="{{ graph_html }}" id="graph" frameborder="0"
-							height="90%" width="100%"></iframe>
+							height="90%" width="100%">
+						</iframe>
 					</div>
 				</div>
 			</div>
