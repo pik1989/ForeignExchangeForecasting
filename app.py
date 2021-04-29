@@ -85,8 +85,8 @@ def index():
             graph_html = f.read()
 
     
-
-    return render_template("step1.html",price_day1=price_day1,change_1=change_1,change_7=change_7,change_15=change_15,change_365=change_365, graph_html=graph_html)
+    IS_FORECAST = False
+    return render_template("step1.html",price_day1=price_day1,change_1=change_1,change_7=change_7,change_15=change_15,change_365=change_365, graph_html=graph_html, IS_FORECAST=IS_FORECAST)
 
 
 
@@ -139,9 +139,10 @@ def submit_data():
         py.plot([actual_chart, predict_chart, predict_chart_upper, predict_chart_lower],filename = filename, auto_open=False)
         with open(filename, "r") as f:
             graph_html = f.read()
-   
+
+    IS_FORECAST = True
     
-    return render_template("step1.html",price_day1=price_day1,change_1=change_1,change_7=change_7,change_15=change_15,change_365=change_365, graph_html=graph_html, parameter=s2)
+    return render_template("step1.html",price_day1=price_day1,change_1=change_1,change_7=change_7,change_15=change_15,change_365=change_365, graph_html=graph_html, parameter=s2, IS_FORECAST = IS_FORECAST)
 
 
    
