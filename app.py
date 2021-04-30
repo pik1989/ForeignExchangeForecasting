@@ -150,7 +150,12 @@ def submit_data():
     final_df_1.reset_index(drop=True, inplace=True)
     IS_FORECAST = True
     
-    return render_template("step1.html",price_day1=price_day1,change_1=change_1,change_7=change_7,change_15=change_15,change_365=change_365, graph_html=graph_html, parameter=s2,tables=[final_df_1.to_html(classes='forecast')], IS_FORECAST = IS_FORECAST)
+    table = final_df_1.to_html(classes='table table-striped', border=0)
+    table = table.replace('tr style="text-align: right;"', 'tr style="text-align: center;"')
+    table = table.replace('<th></th>', '')
+    table = table.replace('<th>', '<th colspan="2">', 1)
+    print(table)
+    return render_template("step1.html",price_day1=price_day1,change_1=change_1,change_7=change_7,change_15=change_15,change_365=change_365, graph_html=graph_html, parameter=s2,table=table, IS_FORECAST = IS_FORECAST)
 
 
    
@@ -158,4 +163,4 @@ def submit_data():
     
 if __name__ =="__main__":
 
-    socketio.run(app, port=8000)
+    socketio.run(app, port=8000, debug=True)
