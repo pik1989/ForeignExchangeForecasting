@@ -46,7 +46,6 @@
 		}
 
 		#graph {
-			height: 90%;
 			width: 100%;
 		}
 
@@ -95,6 +94,11 @@
 
 		.loss {
 			color: rgb(151, 29, 29);
+		}
+
+		.table {
+			margin: auto;
+			width: 50% !important;
 		}
 	</style>
 
@@ -223,16 +227,14 @@
 					<br>
 					<div class="embed-responsive embed-responsive-4by3">
 						<iframe class="embed-responsive-item" srcdoc="{{ graph_html }}" id="graph" frameborder="0"
-							height="90%" width="100%">
+							height="70%" width="100%">
 						</iframe>
+						{% if table %}
 						<h2 class="text-center fw-bolder text-secondary">Forecasted data</h2>
-						<h2 class="text-center fw-bolder text-secondary display-5">
-						<table class="center", style="border:1px solid black;margin-left:auto;margin-right:auto;">
-						{% for table in tables %}
-						
 						{{ table|safe }}
-						{% endfor %}
-						</table>
+
+						{% endif %}
+						
 						</h2>
 					</div>
 					
